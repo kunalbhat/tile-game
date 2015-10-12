@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-family: "Helvetica Neue";
+      }
+
+      #board {
+        height: 300px;
+        width: 300px;
+      }
+
+      .tile {
+        background-color: #efefef;
+        cursor: pointer;
+        display: inline-block;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        text-indent: -999em;
+        width: 100px;
+      }
+
+      .tile.open {
+        background-color: #fff;
+        cursor: default;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <section id="board">
+    </section>
+
+
+    <script type="text/javascript">
+      var board, boardSize, tiles, openTile, generateBoard, randomizeBoard, moveTile, findAdjacent, tileElement;
+
+      board = document.getElementById("board");
+      boardSize = 16;
+      tiles = [];
+      tileElement = document.createElement("div");
+
+      for (i=1; i<boardSize + 1; i++) {
+        tiles.push(i);
+      }
+
+      openTile = tiles[tiles.length - 1];
+
+      generateBoard = function() {
+        s = Math.sqrt(boardSize) * 100;
+
+        $("#board").html("").css({
+          "height": s,
+          "width": s
+        });
+
+        for (i=0; i<tiles.length; i++) {
+          $("#board").append("<span class='tile' data-tile='" + tiles[i] + "'>" + tiles[i] + "</span>");
+        }
+
+        $(".tile[data-tile='" + openTile + "']").addClass("open");
+      }
+
+      randomizeBoard = function() {
+      }
+
+      moveTile = function(tile, pos) {
+        o = tiles.indexOf(openTile);
+
+        tiles.splice(o, 1);
+        tiles.splice(pos, 0, openTile);
+
+        generateBoard();
+      }
+
+      findAdjacent = function(pos) {
+        i = tiles.indexOf(openTile);
+        j = tiles.indexOf(pos);
+        s = Math.sqrt(boardSize);
+
+        var a = i - 1;
+        var b = i + 1;
+        var c = i + s;
+        var d = i - s;
+
+        if (a === j) {
+          moveTile(a, j);
+        }
+
+        if (b === j) {
+          moveTile(b, j);
+        }
+
+        if (c === j) {
+          moveTile(c, j);
+        }
+
+        if (d === j) {
+          moveTile(d, j);
+        }
+      }
+
+      generateBoard();
+
+      $(document).ready(function(){
+        $(document).on("click", ".tile", function(event) {
+          pos = $(this).data("tile");
+
+          findAdjacent(pos);
+        });
+      });
+
+    </script>
+  </body>
+</html>
