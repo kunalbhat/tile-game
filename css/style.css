@@ -1,0 +1,25 @@
+body {
+  font-family: "Helvetica Neue";
+}
+
+#board {
+  height: 300px;
+  width: 300px;
+}
+
+.tile {
+  background-color: #efefef;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  display: inline-block;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  text-indent: -999em;
+  width: 100px;
+}
+
+.tile.open {
+  background-color: #fff;
+  cursor: default;
+}
