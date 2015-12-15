@@ -58,14 +58,22 @@ generateBoard = function() {
 
   // Set the tile background
   for (i=0; i<tiles.length; i++) {
-    $("#board").append("<span class='tile' data-tile='" + tiles[i] + "' style='background-image:url(lib/img/image.png);background-position:" + c[i]['x'] + "px " + c[i]['y'] + "px;'>" + tiles[i] + "</span>");
+    $("#board").append("<span class='tile' data-tile='" + tiles[i] + "'>" + tiles[i] + "</span>");
   }
 
   $(".tile[data-tile='" + openTile + "']").addClass("open");
 }
 
-redrawBoard = function() {
- // Call this just to move pieces around
+generateBoardBackground = function() {
+  for (i=0; i<tiles.length; i++) {
+    if (i !== (boardSize-1)) {
+      $("#board").find(".tile[data-tile=" + tiles[i] + "]").css({
+        "background-image": "url(lib/img/image.png)",
+        "background-position-x": c[i]['x'] + "px",
+        "background-position-y": c[i]['y'] + "px"
+      });
+    }
+  }
 }
 
 randomizeBoard = function() {
@@ -111,6 +119,7 @@ findAdjacent = function(pos) {
 }
 
 generateBoard();
+generateBoardBackground();
 
 $(document).ready(function(){
   $(document).on("click", ".tile", function(event) {
