@@ -56,7 +56,6 @@ generateBoard = function() {
     "width": b
   });
 
-  // Set the tile background
   for (i=0; i<tiles.length; i++) {
     $("#board").append("<span class='tile' data-tile='" + tiles[i] + "'>" + tiles[i] + "</span>");
   }
