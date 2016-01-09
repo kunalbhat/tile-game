@@ -38,11 +38,11 @@ generateBoard = function() {
   ay = 0;
 
   for (i=0; i<boardSize; i++) {
-
-    if (i % 4 === 0) {
+    if (i % 4 <= 0) {
       cy = (ay * 100) * -1;
       ay++;
       ax = 0;
+      cx = 0;
     } else {
       ax++;
       cx = (ax * 100) * -1;
