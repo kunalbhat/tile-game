@@ -8,18 +8,18 @@ body {
 }
 
 .tile {
-  background-color: #efefef;
+  background-color: #fff;
   background-repeat: no-repeat;
   cursor: pointer;
   display: inline-block;
   height: 100px;
   line-height: 100px;
   text-align: center;
-  text-indent: -999em;
   width: 100px;
 }
 
 .tile.open {
+  background-image: none;
   background-color: #fff;
   cursor: default;
 }
