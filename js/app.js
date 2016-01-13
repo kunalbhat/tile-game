@@ -48,7 +48,7 @@ generateBoard = function() {
       cx = (ax * 100) * -1;
     }
 
-    c.push({x: cx, y: cy});
+    c.push({i: i, x: cx, y: cy});
   }
 
   $("#board").html("").css({
@@ -57,10 +57,22 @@ generateBoard = function() {
   });
 
   for (i=0; i<tiles.length; i++) {
-    $("#board").append("<span class='tile' data-tile='" + tiles[i] + "'>" + tiles[i] + "</span>");
+    originalTilePos = tiles.indexOf(tiles[i]);
+    $("#board").append("<span class='tile' data-tile='" + tiles[i] + "' data-pos='" + originalTilePos + "'>" + tiles[i] + "</span>");
   }
 
   $(".tile[data-tile='" + openTile + "']").addClass("open");
+}
+
+regenerateBoard = function() {
+  $("#board").html("");
+
+  for (i=0; i<tiles.length; i++) {
+    originalTilePos = tiles.indexOf(tiles[i]);
+    $("#board").append("<span class='tile' data-tile='" + tiles[i] + "' data-pos='" + originalTilePos + "'>" + tiles[i] + "</span>");
+  }
+
+  addTileBackgrounds();
 }
 
 generateTileBackgrounds = function() {
@@ -71,6 +83,28 @@ generateTileBackgrounds = function() {
         "background-position-x": c[i]['x'] + "px",
         "background-position-y": c[i]['y'] + "px"
       });
+    } else {
+      $("#board").find(".tile[data-tile=" + openTile + "]").css({
+        "background-image": "none"
+      });
+    }
+  }
+}
+
+addTileBackgrounds = function() {
+  for (i=0; i<tiles.length; i++) {
+    if (i !== (boardSize-1)) {
+      m = tiles.indexOf(tiles[i]) + 1;
+      console.log(tiles[i], m, c[m]['x'], c[m]['y']);
+      $("#board").find(".tile[data-pos=" + tiles[m] + "]").css({
+        "background-image": "url(lib/img/image.png)",
+        "background-position-x": c[m]['x'] + "px",
+        "background-position-y": c[m]['y'] + "px"
+      });
+    } else {
+      $("#board").find(".tile[data-tile=" + openTile + "]").css({
+        "background-image": "none"
+      });
     }
   }
 }
@@ -78,7 +112,7 @@ generateTileBackgrounds = function() {
 randomizeBoard = function() {
   shuffle(tiles);
 
-  generateBoard();
+  regenerateBoard();
 }
 
 moveTile = function(tile, pos) {
@@ -87,7 +121,7 @@ moveTile = function(tile, pos) {
   tiles.splice(o, 1);
   tiles.splice(pos, 0, openTile);
 
-  generateBoard();
+  regenerateBoard();
 }
 
 findAdjacent = function(pos) {
