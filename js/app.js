@@ -63,7 +63,7 @@ generateBoard = function() {
   $(".tile[data-tile='" + openTile + "']").addClass("open");
 }
 
-generateBoardBackground = function() {
+generateTileBackgrounds = function() {
   for (i=0; i<tiles.length; i++) {
     if (i !== (boardSize-1)) {
       $("#board").find(".tile[data-tile=" + tiles[i] + "]").css({
@@ -118,7 +118,7 @@ findAdjacent = function(pos) {
 }
 
 generateBoard();
-generateBoardBackground();
+generateTileBackgrounds();
 
 $(document).ready(function(){
   $(document).on("click", ".tile", function(event) {
